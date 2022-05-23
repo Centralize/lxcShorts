@@ -1,0 +1,30 @@
+#!/bin/bash
+
+HOST=$1
+LINKNAME=$2
+PORT=$3
+
+syntax () {
+	echo ""
+	echo "OpenLAB LXC Shorts 0.2 - PortForward"
+	echo "-------------------------------------------------------------------------"
+	echo "Syntax: $0 <name of lxc container> <link name> <port number>"
+	echo ""
+	exit 1
+}
+
+if [ -z $HOST ]; then
+	syntax
+fi
+
+if [ -z $LINKNAME ]; then
+	syntax
+fi
+
+if [ -z $PORT ]; then
+	syntax
+fi
+
+echo "lxc config device add $HOST $LINKNAME proxy listen=tcp:0.0.0.0:$PORT connect=tcp:127.0.0.1:$PORT"
+echo "Done."
+exit 0
